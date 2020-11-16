@@ -18,3 +18,9 @@ The AS3935 module utilizes an SPI interface, with the typical CS, SCK, MOSI, and
 Here is a diagram showing the wiring diagram used for all three data collection stations
 
 ![Data Collection Station](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/data_collector_schematic.png?raw=true)
+
+In this diagram, an external 5V power source will be needed, but the 3.3V input needed for the AS3935 module can be supplied by the mBed module. 
+In order to communicate with the user's personal device, the personal device's IP address and an AP's credentials must be uploaded into each of the data collectors before powering on. It is highly recommended that the personal mbed device is booted first before the data collectors, though it does not matter which order they boot in.
+Each station will have their own ID associated with it, so when it sends a message (as a struct), the personal mBed device will know which one sent which.
+## The Personal Device
+Here is a diagram showing the wiring diagram used for the personal mBed device the user will keep on him/her.
