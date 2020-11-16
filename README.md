@@ -16,3 +16,4 @@ The AS3935 module utilizes an SPI interface, with the typical CS, SCK, MOSI, and
 | GND  | Ground              |
 ## The Lightning Data Collection Stations
 Here is a diagram showing the wiring diagram used for all three data collection stations
+![Data Collection Station](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/yes.jpg?raw=true)
