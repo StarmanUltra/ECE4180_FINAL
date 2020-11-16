@@ -7,7 +7,7 @@ The idea behind this project is to create a personal device internet for outdoor
 ![AS3935 Lightning Detection Module](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/as3935.jpg?raw=true)
 
 The AS3935 Lightning Detector Module uses a 500 kHz resonance antenna to detect lightning and measure the strength. Using the strength measurements, the AS3935 module can calculate the distance of the lightning to the nearest kilometer (maximum of 40 kilometers away). The AS3935 can also be scaled down to detect sparks at distances in the centimeter range.
-The AS3935 module utilizes an SPI interface, with the typical CS, SCK, MOSI, and MISO pins. The pinout is like any other SPI device, except for one additional pin: INT. INT will be driven high in the event that lightning is detected.
+The AS3935 module utilizes an SPI interface. The pinout is like any other SPI device, except for one additional pin: INT. INT will be driven HIGH in the event that lightning is detected.
 | Pin  | Function            |
 |------|---------------------|
 | MOSI | Master-Out-Slave-In |
