@@ -35,7 +35,7 @@ When booting up the device, it may be attached to a PC serial port for setting u
 
 ## Trilateral Centroid Localization (The Algorithm)
 
-![Trilateral Centroid Localization](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/trilateral_centroid_localization.jpg?raw=true)
+![Trilateral Centroid Localization](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/trilateral_centroid_localization.png?raw=true)
 
 The image shown above provides a visual on how the algorithm works once all three systems send in data.
-<NEEDS MORE DETAIL>
+***NEEDS MORE DETAIL
