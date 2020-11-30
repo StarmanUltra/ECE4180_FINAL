@@ -37,31 +37,37 @@ When booting up the device, it may be attached to a PC serial port for setting u
 
 ![Trilateral Centroid Localization](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/trilateral_centroid_localization.png?raw=true)
 
-The image shown above provides a visual on how the algorithm works once all three systems send in data.
-***NEEDS MORE DETAIL
+The image shown above provides a visual of how the true-range multilateration algorithm works once all three systems send in data to a centralized location for processing.
 
-In order to localize the location of the detected stike, and thus the strom font, true-range multilateration is used. In true-range multilateration, the distances to the strike detected by each station at the same time can be used to caluclate the extact location of the strike. To localize a point in n-diminsion sapce, n+1 or more stations are needed. In this case, to localize the location of a stike in 2D, three stations are used.
+To localize the location of the detected strike, and thus the storm front, true-range multilateration is used. In true-range multilateration, the distances to the strike detected by each station at the same time can be used to calculate the exact location of the strike. To localize a point in n-dimension space, n+1 or more stations are needed. In this case, to localize the location of a strike in the 2D latitude-longitude coordinate system, three stations are used.
 
-Let us form some definitions that will be handy in solving the porblem:
+Let us form some definitions that will be handy in solving the problem:
 - P_stike, (lat, lon) = stike location
 - P_sn, (lat, lon), ex. P_s0 = detection station location
 - d_n, km, ex. d_0 = distance to stike detected from station
-- distance(P_a, P_b) = funcion to calculate the distance between two lat-lon points, haversince disance and equalangular distance are 2 fast and simple approximations
+- distance(P_a, P_b) = function to calculate the distance between two lat-lon points, haversine disance and an equirectangular distance are 2 fast and simple approximations,
 
-A nieve ideal apprach would fomulate the problem as follows:
-Solve for P_strike (P_strike_lat and P_strike_lon) given the following constaints:
+A nieve ideal approach would formulate the problem as follows:
+Solve for P_strike (P_strike_lat and P_strike_lon) given the following constraints:
 - d_0 = distance(P_strike, P_s0)
 - d_1 = distance(P_strike, P_s1)
 - d_2 = distance(P_strike, P_s2)
 
-It may appear as if this is a system with 2 unkonwns and 3 equations. However, due to how the distances are calulcated, there can be an ambiguitywith the signs of certian values thus requireing the extra contraint.
+It may appear as if this is a system with 2 unknowns and 3 equations. However, due to how the distances are calculated, this system is nonlinear. There can be an ambiguity with the signs of certain values thus requiring more equations than unknowns.
 
-If you tried to solve this system with real world data you will not find a solution since the distances will have some vairance and not overlap excatly to cre3ate a single solution. However, these ditance should overlap in a very very small region from which we can find the point that has the least error. Given this prespocitve, the poronelm can be tranlated into an optmization probolem tho find the point that solves the system with the smallest error.
+If you tried to solve this system with real-world data you will not find a solution since the distances will have some variance and not overlap exactly to create a single solution. If you use ideal distances there would be a region where a point the correct distance from each station. However, with real-world data, these distances may be slightly bigger or smaller creating a small gap or overlap region where the solution could lie with some error.
+
+Given this perspective, the problem can be translated into an optimization problem to find the point that satisfies the distance constraints with the smallest error.
 
 The optimziation apprach is as follows:
 - Reformulate the cointaints d_n = distance(P_strike, P_sn) as 0 = abs(distance(P_strike, P_sn) - d_n)
-  - The right hand term of this equation, abs(distance(P_strike, P_sn) - d_n) give the absolute error of one staion's distance estimate for a given stike location
+  - The right-hand term of this equation, abs(distance(P_strike, P_sn) - d_n) give the absolute error of one station's distance estimate for a given strike location
 - Define E_n = abs(distance(P_strike, P_sn) - d_n) as the absolute error for a station distance prediction for a given stike location
 - Define E = E_0 + E_1 + E_2 as  the sum of all absolute distance errors for a given stike location
-  - Ideally, plugging in the the correct stike location should yeild E=0, however due to some vaiaince in the meausred distances E will be nonzero but small
- - Minimize E over P_strike (P_strike_lat and P_strike_lon)
+  - Ideally, plugging in the correct strike location should yield E=0, however, due to some variance in the measured distances E will be nonzero but small
+ - Minimize E over P_strike:\[P_strike_lat and P_strike_lon\]
+ 
+This optimization problem can be viewed as a constrained non-linear optimization problem. You can solve this optimization problem using any scaler function optimation method. For simplicity, we implemented this optimization using the Nelder-Mead simplex optimization method. If you want a more intuitive understanding of the objective function, you can imagine the error of each station E_n = abs(distance(P_strike, P_sn) - d_n) as a parabola with the negative part at the minimum flipped to be positive making a little bump in the middle. The crease where the parabola is folded at E_n=0 because of the absolute value function forms an approximate circle (it's a slight ellipse due to the earth's shape and the distance functions used) whose radius is the strike distance. The sum of these parabolas for each station makes the complete objective function. This is a constrained optimization problem as well since you can reasonably set an effective bounding box for where you want to optimize in that is limited by the ranges the lightning detectors can sense.
+
+Below are two images of what this may look like in practice. The code used to implement these calculations and generate the plots is written in Python.
+
