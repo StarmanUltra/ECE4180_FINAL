@@ -10,9 +10,17 @@ from joblib import Parallel, delayed
 from tqdm import tqdm
 
 
-station_locations = [LatLonPoint(lat=33.778662, lon=-84.408694), # 935 apartment
-                        LatLonPoint(lat=33.769620, lon=-84.390898), # nav east apartment
-                        LatLonPoint(lat=33.781994, lon=-84.402854)] # center street house
+# station_locations = [LatLonPoint(lat=33.778662, lon=-84.408694), # 935 apartment
+#                         LatLonPoint(lat=33.769620, lon=-84.390898), # nav east apartment
+#                         LatLonPoint(lat=33.781994, lon=-84.402854)] # center street house
+
+s_lats = np.arange(33.6, 34, 0.1)
+s_lons = np.arange(-84.7, -84.1, 0.1)
+s_lats_v, s_lons_v = np.meshgrid(s_lats, s_lons)
+
+
+station_locations = [LatLonPoint(c[0],c[1]) for c in zip(s_lats_v.ravel().tolist(), s_lons_v.ravel().tolist())]
+print(station_locations)
 
 lats = np.arange(33.5, 34.2, 0.01)
 lons = np.arange(-84.8, -84.0, 0.01)
@@ -37,14 +45,16 @@ z = np.reshape(z, (len(lats), len(lons)))
 fig, ax = plt.subplots()
 pcolormesh = ax.pcolormesh(lons_v, lats_v, z)
 
-ranges = [1,2,5,10,15,20,30]
+# ranges = [1,2,5,10,15,20,30]
 
-ellipses = [  Ellipse((station_locations[0].lon, station_locations[0].lat), width=(i/88*2), height=(i/111*2), fill=False, edgecolor=np.random.rand(3,), linewidth=2) for i in ranges ] 
-for e in ellipses:
-    ax.add_patch(e)
-    print(e)
-ax.legend(ellipses, ['Range: {} Km.'.format(i) for i in ranges])
+# ellipses = [  Ellipse((station_locations[0].lon, station_locations[0].lat), width=(i/88*2), height=(i/111*2), fill=False, edgecolor=np.random.rand(3,), linewidth=2) for i in ranges ] 
+# for e in ellipses:
+#     ax.add_patch(e)
+#     print(e)
+# ax.legend(ellipses, ['Range: {} Km.'.format(i) for i in ranges])
 
+
+ax.scatter([s.lon for s in station_locations], [s.lat for s in station_locations], s=10, c='b', marker='o')
 
 
 
