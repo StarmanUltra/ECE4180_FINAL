@@ -65,12 +65,15 @@ def objective_function(x, station_locations=[], station_ranges=[]):
     return error
     
 
-def locate_strike(station_locations, station_ranges):
+def locate_strike(station_locations, station_ranges, verbose=False):
     x0 = [-33.0, -80.0]
-    print(station_ranges)
+    if verbose:
+        print(station_ranges)
+    
     obj_func = partial(objective_function,station_locations=station_locations,station_ranges=station_ranges)
     res = minimize(obj_func, x0, method='nelder-mead',options={'maxiter':5000, 'maxfev':5000, 'fatol':1e-6})
-    print(res)
+    if verbose:
+        print(res)
 
     return LatLonPoint(res.x[0], res.x[1])
 
@@ -91,7 +94,7 @@ if __name__ == "__main__":
     station_ranges_rounded = [round_to_range_points(x) for x in station_ranges_haversine]
     # print(f"Station Ranges Rounded: {station_ranges_rounded}")
 
-    ans = locate_strike(station_locations, station_ranges_haversine)
+    ans = locate_strike(station_locations, station_ranges_rounded)
     print(f"Predicted Strike Location: {ans}")
     
     error = d_haversine(ans, strike_location)
@@ -108,8 +111,6 @@ if __name__ == "__main__":
 
     z = list(map(obj_func, coords))
     z = np.reshape(z, (len(lats), len(lons)))
-    z = np.sqrt(z)
-
     
     # fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
     # surf = ax.plot_surface(lons_v, lats_v, z, linewidth=10, antialiased=True, cmap='coolwarm', alpha=0.9)
@@ -123,7 +124,7 @@ if __name__ == "__main__":
     # ax.scatter(lons_v.ravel().tolist(), lats_v.ravel().tolist())
     pcolormesh = ax.pcolormesh(lons_v, lats_v, z, vmin=0)
 
-    ellipses = [   Ellipse((i[0].lon, i[0].lat), width=i[1]/88*2, height=i[1]/111*2, color='y', fill=False) for i in zip(station_locations, station_ranges_haversine) ] 
+    ellipses = [   Ellipse((i[0].lon, i[0].lat), width=i[1]/88*2, height=i[1]/111*2, color='y', fill=False) for i in zip(station_locations, station_ranges_rounded) ] 
     for e in ellipses:
         ax.add_patch(e)
         print(e)
@@ -137,6 +138,4 @@ if __name__ == "__main__":
     cbar = plt.colorbar(pcolormesh, ax=ax)
     cbar.set_label('Objective Function (Error)')
 
-
-    
     plt.show()
