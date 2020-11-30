@@ -1,7 +1,11 @@
 # Lightning Detection (ECE4180)
-## Stefan Abi-Karam, Brian Harden, Larry Kresse
+__Stefan Abi-Karam, Brian Harden, Larry Kresse__
+
+
 ## Introduction
 The idea behind this project is to create a personal device internet for outdoor recreation (ex. hiking, camping, ...) that alerts the user of lightning detected de to nearby storms. The personal device will mainly take advantage of the “SparkFun Lightning Detector - AS3935” coupled with a screen, small speaker, and Bluetooth-to-phone to alert the user when a strike is detected and approximately how far away it is. This device could also be connected to your mobile device through Bluetooth to also notify the user on their phone. We are also interested in logging the strikes detected by multiple devices,  either locally or by sending them to some database to be able to trilateral the exact location of all the lightning strikes detected. This can be useful for real-time alerts or analysis of a storm system.
+
+
 ## AS3935 Lightning Detector Module
 
 ![AS3935 Lightning Detection Module](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/as3935.jpg?raw=true)
@@ -71,3 +75,38 @@ This optimization problem can be viewed as a constrained non-linear optimization
 
 Below are two images of what this may look like in practice. The code used to implement these calculations and generate the plots is written in Python.
 
+![Objective Function and Solution](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/objective_function_and_solution.png?raw=true)
+
+This plot shows an example of the objective function and solution. Three detectors are placed in spread-out locations on the GT campus indicated by the 3 blue circle markers. A simulated actual strike location, the green 'x' marker, is located at Hartsfield-Jackson Atlanta International Airport. The predicted strike location, indicated the red '+' marker, seems to be accurate overlapping over the predicted location marker. Each station also has an associated yellow ellipse plotted around it. For a given station's measured range, each point on the ellipse around a station is that distance away from the station. You can see that all three ellipses overlap most closely over the strike location.
+
+![3D Objective Function Plot](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/objective_function_3D.png?raw=true)
+This plot shows the complete objective function, E, for the other plot before. Since all three stations are clustered next to each other so this plot is a good approximation for the error distance function for one station E_n. 
+
+### Detector Range Quantization Effect
+
+In practice, the lightning detector boards cannot provide accurate ranges down to the decimal. The boards can only provide ranges that are quantized to a certain value. These values are shown in the table below.
+
+| Distance (Km) |
+|---------------|
+| Out of range  |
+| 40            |
+| 37            |
+| 34            |
+| 31            |
+| 27            |
+| 24            |
+| 20            |
+| 17            |
+| 14            |
+| 12            |
+| 10            |
+| 8             |
+| 6             |
+| 5             |
+| 0             |
+
+Since these quantized/rounded range distances are plugged into the algorithm, the predicted strike location will have some error. This effect can be added to the simulation above with this quantization effect added. This is shown in the plot below.
+
+
+
+We can model this by taking a bunch of simulated strike locations over a region, calculating predicted station distances, rouning these distances to the nearest quantized value the board can provide, plugging those into the multilateration algorithm, and calculating the predicted strike location error. This modeled quantization error is shown in the plot below.
