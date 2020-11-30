@@ -71,3 +71,11 @@ This optimization problem can be viewed as a constrained non-linear optimization
 
 Below are two images of what this may look like in practice. The code used to implement these calculations and generate the plots is written in Python.
 
+![Objective Function and Solution](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/objective_function_and_solution.png?raw=true)
+
+This plot shows an example of the objective function and solution. Three detectors are placed in spread-out locations on the GT campus indicated by the 3 blue circle markers. A simulated actual strike location, the green 'x' marker, is located at Hartsfield-Jackson Atlanta International Airport. The predicted strike location, indicated the red '+' marker, seems to be accurate overlapping over the predicted location marker. Each station also has an associated yellow ellipse plotted around it. For a given station's measured range, each point on the ellipse around a station is that distance away from the station. You can see that all three ellipses overlap most closely over the strike location.
+
+![3D Objective Function Plot](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/objective_function_3D.png?raw=true)
+This plot shows the complete objective function, E, for the other plot before. Since all three stations are clustered next to each other so this plot is a good approximation for the error distance function for one station E_n. 
+
+
