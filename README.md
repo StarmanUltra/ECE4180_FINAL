@@ -113,3 +113,7 @@ Since these quantized/rounded range distances are plugged into the algorithm, th
 We can model this by taking a bunch of simulated strike locations over a region, calculating predicted station distances, rouning these distances to the nearest quantized value the board can provide, plugging those into the multilateration algorithm, and calculating the predicted strike location error. This modeled quantization error is shown in the plot below.
 
 ![Quantization Error Model](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/quantization_error.png?raw=true)
+
+This quantization error can be greatly reduced is greatly reduced by increasing the number of stations in the network as well as spacing them out. This kind of lighting network can result in signing lighting strike location prediction accuracy over a very large region with very little hardware required. This is shown in the plot below.
+
+![Many Stations Model](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/many_stations.png?raw=true)
