@@ -107,6 +107,9 @@ In practice, the lightning detector boards cannot provide accurate ranges down t
 
 Since these quantized/rounded range distances are plugged into the algorithm, the predicted strike location will have some error. This effect can be added to the simulation above with this quantization effect added. This is shown in the plot below.
 
+![Quantization Error Effect](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/rounded_solution.png?raw=true)
 
 
 We can model this by taking a bunch of simulated strike locations over a region, calculating predicted station distances, rouning these distances to the nearest quantized value the board can provide, plugging those into the multilateration algorithm, and calculating the predicted strike location error. This modeled quantization error is shown in the plot below.
+
+![Quantization Error Model](https://github.com/StarmanUltra/ECE4180_FINAL/blob/main/images/quantization_error.png?raw=true)
