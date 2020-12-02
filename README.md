@@ -1,6 +1,8 @@
 # Lightning Detection (ECE4180)
 __Stefan Abi-Karam, Brian Harden, Larry Kresse__
 
+## Presentation
+[![Presentation](https://img.youtube.com/vi/jeNYpbccObc/0.jpg)](https://youtu.be/jeNYpbccObc)
 
 ## Introduction
 The idea behind this project is to create a personal device internet for outdoor recreation (ex. hiking, camping, ...) that alerts the user of lightning detected de to nearby storms. The personal device will mainly take advantage of the “SparkFun Lightning Detector - AS3935” coupled with a screen, small speaker, and Bluetooth-to-phone to alert the user when a strike is detected and approximately how far away it is. This device could also be connected to your mobile device through Bluetooth to also notify the user on their phone. We are also interested in logging the strikes detected by multiple devices,  either locally or by sending them to some database to be able to trilateral the exact location of all the lightning strikes detected. This can be useful for real-time alerts or analysis of a storm system.
